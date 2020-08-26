@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+
+  drools-wb:
+    container_name: business-central
+    image: jatchison/kie-workbench:latest
+    ports:
+      - 8080:8080
+      - 8001:8001
+    volumes:
+      - ./.niogit:/opt/jboss/wildfly/bin/.niogit

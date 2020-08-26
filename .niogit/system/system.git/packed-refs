@@ -1,0 +1,5 @@
+# pack-refs with: peeled
+61bee1de8ebca99f080de7fce52bd6fee041a562 refs/heads/locks
+078ff7f8a6f9126396a30017fb2c3be157355bb4 refs/heads/master
+8599ba92a385541c7204350849b828ee63e193eb refs/heads/service-tasks
+a497fb27fb65376450015c2cb63d5e57b475b0fc refs/heads/social
