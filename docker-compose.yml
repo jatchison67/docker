@@ -2,7 +2,7 @@ version: '3'
 
 services:
 
-  drools-wb:
+  kie-wb:
     container_name: business-central
     image: jatchison/kie-workbench:latest
     ports:

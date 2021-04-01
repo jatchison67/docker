@@ -10,7 +10,7 @@ ENV WILDFLY_SHA1 95366b4a0c8f2e6e74e3e4000a98371046c83eeb
 ENV JBOSS_HOME /opt/jboss/wildfly
 ENV JBOSS_BIND_ADDRESS 0.0.0.0
 ENV KIE_REPOSITORY https://repository.jboss.org/nexus/content/groups/public-jboss
-ENV KIE_VERSION 7.42.0.Final
+ENV KIE_VERSION 7.51.0.Final
 ENV KIE_CLASSIFIER wildfly19
 ENV KIE_CONTEXT_PATH business-central
 ENV KIE_SERVER_PROFILE standalone-full
@@ -39,17 +39,18 @@ ENV LAUNCH_JBOSS_IN_BACKGROUND true
 
 # COPY standalone.sh /opt/jboss/wildfly/bin/
 # COPY standalone.conf /opt/jboss/wildfly/bin/
-ADD start_drools-wb.sh $JBOSS_HOME/bin/start_drools-wb.sh
-RUN chown jboss:jboss $JBOSS_HOME/bin/start_drools-wb.sh
+# ADD start_drools-wb.sh $JBOSS_HOME/bin/start_drools-wb.sh
+# RUN chown jboss:jboss $JBOSS_HOME/bin/start_drools-wb.sh
+COPY standalone-full.xml $JBOSS_HOME/standalone/configuration/
+RUN chown jboss:jboss $JBOSS_HOME/standalone/configuration/standalone-full.xml
 RUN /opt/jboss/wildfly/bin/add-user.sh -a -u kieworkbench -p workbench1! -g admin,kie-workbench
-RUN /opt/jboss/wildfly/bin/add-user.sh -a -u kieadmin -p admin1! -g admin,kie-server
+RUN /opt/jboss/wildfly/bin/add-user.sh -a -u kieadmin -p admin1! -g admin,kie-server,kie-workbench
 
 ####### CUSTOM JBOSS USER ############
 USER jboss
-WORKDIR $JBOSS_HOME
+WORKDIR $JBOSS_HOME/bin/
 ####### EXPOSE INTERNAL JBPM GIT PORT ############
 EXPOSE 8080 8001
 
 ####### RUNNING DROOLS-WB ############
-## CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "-c", "standalone-full.xml"]
-CMD ["./start_drools-wb.sh"]
+CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "-c", "standalone-full.xml"]
